@@ -11,12 +11,20 @@ class BinaryMinHeap
   end
 
   def extract
+    last = (count) - 1
+    @store[0], @store[last] = @store[last], @store[0]
+    popped = @store.pop
+    BinaryMinHeap.heapify_down(@store, 0, count)
+    popped
   end
 
   def peek
+    @store[0]
   end
 
   def push(val)
+    @store.push(val)
+    BinaryMinHeap.heapify_up(@store, (count) - 1, count)
   end
 
   def default
@@ -110,5 +118,28 @@ class BinaryMinHeap
 
 
   def self.heapify_up(array, child_idx, len = array.length, &prc)
+    if prc.nil?
+      prc = Proc.new do |el1, el2|
+        (el1 <=> el2)
+      end
+    end
+
+    heaped = false
+    target_idx = child_idx
+
+    until heaped || target_idx == 0
+      parent_idx = parent_index(target_idx)
+      parent = array[parent_idx]
+      child = array[target_idx]
+
+      if prc.call(parent, child) == 1
+        array[parent_idx], array[target_idx] = array[target_idx], array[parent_idx]
+        target_idx = parent_idx
+      else
+        heaped = true
+      end
+    end
+
+    array
   end
 end
