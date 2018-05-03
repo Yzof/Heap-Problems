@@ -35,35 +35,6 @@ class BinaryMinHeap
 
   public
 
-  # def is_valid?(parent_idx, child_idx, type = 'min')
-  #   parent = @store[parent_idx]
-  #   child = @store[child_idx]
-  #
-  #   if type == 'min'
-  #     parent <= child
-  #   else
-  #     parent >= child
-  #   end
-  # end
-  #
-  # def swap(parent_idx)
-  #   children_indices = child_indices(count, parent_idx)
-  #
-  #   parent = @store[parent_idx]
-  #   child1 = @store[children_indices[0]] || nil
-  #   child2 = @store[children_indices[1]] || nil
-  #
-  #   if @prc.call(parent, child1) == -1
-  #     @store[parent_idx], @store[child_indices[0]] = @store[child_indices[0]], @store[parent_idx]
-  #   elsif @prc.call(parent, child2) == -1
-  #     @store[parent_idx], @store[child_indices[1]] = @store[child_indices[1]], @store[parent_idx]
-  #   end
-  # end
-
-  # def find_smaller()
-  #
-  # end
-
   def self.child_indices(len, parent_index)
     #Heaps 3 video 6:40
     children = []
@@ -89,7 +60,7 @@ class BinaryMinHeap
       end
     end
 
-    parent_idx.upto(len - 1) do |idx|
+    parent_idx.upto(len) do |idx|
       children_indices = child_indices(len, idx)
 
       parent = array[idx]
@@ -114,8 +85,6 @@ class BinaryMinHeap
 
     array
   end
-
-
 
   def self.heapify_up(array, child_idx, len = array.length, &prc)
     if prc.nil?
